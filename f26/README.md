@@ -10,3 +10,5 @@ Install the bundled TAPA `0.1.20250815` package by following the
 ## Labs
 
 - [Lab 0: Vector Addition](lab0/README.md)
+- [Lab 1: Dot Product](lab1/README.md)
+- [Lab 2-1: K-Nearest Neighbors (KNN)](lab2/README.md)
