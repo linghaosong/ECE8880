@@ -17,8 +17,10 @@ This baseline compares raw color values; it does not train a neural network.
 
 ## Dataset
 
-The prepared data is included in [cifar-10/](cifar-10), copied unchanged from
-the Fall 2025 lab. No download or access to `f25` is needed to run this lab.
+This lab includes prepared CIFAR-10 data in [cifar-10/](cifar-10); no separate
+download is required. These files use the lab-specific binary layout described
+below.
+
 The original [CIFAR-10 dataset](https://www.cs.toronto.edu/~kriz/cifar.html)
 is by Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton; see Alex Krizhevsky,
 [*Learning Multiple Layers of Features from Tiny Images* (2009)](https://cave.cs.toronto.edu/kriz/learning-features-2009-TR.pdf).
