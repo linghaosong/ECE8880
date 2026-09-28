@@ -94,8 +94,11 @@ void WriteLabel(tapa::istream<uint32_t>& input_stream,
 #pragma HLS PIPELINE II=1
     predict_label[i] = input_stream.read();
   }
-  // Send exactly one completion token after all predictions are written.
-  done_stream.write(true);
+  completion: {
+#pragma HLS protocol fixed
+    // Prevent completion from being scheduled before the label writes.
+    done_stream.write(true);
+  }
 }
 
 // This loop measures cycles in RTL/hardware, not software-simulation timing.

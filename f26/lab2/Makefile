@@ -13,11 +13,11 @@ ifneq ($(filter hlsfull,$(MAKECMDGOALS)),)
 TRAIN_IMAGE_NUM ?= 5000
 TEST_IMAGE_NUM ?= 10000
 else ifneq ($(filter hls cosim hwemu knn.xo,$(MAKECMDGOALS)),)
-TRAIN_IMAGE_NUM ?= 32
-TEST_IMAGE_NUM ?= 16
+TRAIN_IMAGE_NUM ?= 80
+TEST_IMAGE_NUM ?= 40
 else
-TRAIN_IMAGE_NUM ?= 256
-TEST_IMAGE_NUM ?= 128
+TRAIN_IMAGE_NUM ?= 320
+TEST_IMAGE_NUM ?= 160
 endif
 DEFINES := -DTRAIN_IMAGE_NUM=$(TRAIN_IMAGE_NUM) -DTEST_IMAGE_NUM=$(TEST_IMAGE_NUM)
 GXX_FLAGS := -w -O2 -std=c++17 -I$(XILINX_VITIS)/include $(DEFINES)
@@ -50,7 +50,7 @@ swsim: knn
 	./knn
 
 knn.xo: $(SRC)/knn.cpp $(SRC)/knn.h Makefile .build-config
-	tapa compile --top KNNKernel \
+	tapa compile -j 8 --top KNNKernel \
 	--platform xilinx_u55c_gen3x16_xdma_3_202210_1 \
 	--clock-period 5.00 \
 	$(foreach define,$(DEFINES),-c $(define)) \

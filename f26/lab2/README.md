@@ -142,8 +142,12 @@ supplied `ReadImage` replays its training images for every test image.
 match's class label. Its handling of equal distances must match `KNN_host`.
 
 `WriteLabel` writes one prediction per test image and then sends one
-completion token. `Timer` runs concurrently and counts until that token
-arrives; its count is only intended for cosimulation and on-board timing.
+completion token. Keep its supplied `completion` region with
+`#pragma HLS protocol fixed`: without this ordering constraint, HLS can
+schedule the token before the label writes and stop the timer prematurely.
+The pipelined label-writing loop stays outside this region.
+`Timer` runs concurrently and counts until that token arrives; its count is
+only intended for cosimulation and on-board timing.
 The supplied counter is 32-bit and can wrap on long runs; use HLS reports,
 not this counter, for the full-dataset cycle estimates from `make hlsfull`.
 
@@ -178,8 +182,8 @@ make swsim
 ```
 
 Run commands from `f26/lab2`; the default data path is `./cifar-10`.
-By default, software simulation uses the first 256 training images per class
-(2560 total) and the first 128 test images. [src/main.cpp](src/main.cpp) loads
+By default, software simulation uses the first 320 training images per class
+(3200 total) and the first 160 test images. [src/main.cpp](src/main.cpp) loads
 the selected images, runs the CPU reference, invokes the kernel, and verifies
 the result.
 
@@ -197,8 +201,8 @@ make swsim TRAIN_IMAGE_NUM=32 TEST_IMAGE_NUM=32
 passes both values as compiler definitions to the host and HLS compiler.
 They become `constexpr int` values in `src/knn.h`, so HLS can determine the
 loop trip counts. Changing either value invalidates the previous build.
-The RTL targets (`hls`, `cosim`, `hwemu`, and `knn.xo`) default to 32 training
-images per class and 16 test images to keep RTL runs short. If any RTL target
+The RTL targets (`hls`, `cosim`, `hwemu`, and `knn.xo`) default to 80 training
+images per class and 40 test images to keep RTL runs short. If any RTL target
 is requested, these smaller defaults apply to all targets in that `make`
 invocation, unless `hlsfull` is also requested: its full-dataset defaults take
 precedence. Plain `make`, `make knn`, and `make swsim` use the larger software
@@ -221,7 +225,7 @@ loading. Software-simulation time is not FPGA execution latency. When running
 `./knn` directly, set `TAPA_CONCURRENCY=8` in the environment as well.
 
 Build the TAPA `.xo` and run fast RTL cosimulation with the default small
-workload (32 training images per class and 16 test images):
+workload (80 training images per class and 40 test images):
 
 ```bash
 make cosim
@@ -245,6 +249,6 @@ By default, this uses 5000 training images per class (50,000 total) and 10,000
 test images. Run `make hlsfull` by itself for synthesis only; combining it
 with a simulation target selects the full-dataset defaults for that target
 too. It reuses `knn.xo`, so a subsequent `make cosim` without overrides
-rebuilds with the small 32/16 defaults. HLS task cycle estimates are not
+rebuilds with the small 80/40 defaults. HLS task cycle estimates are not
 measured whole-kernel latency; concurrent tasks overlap, and memory or stream
 stalls can add cycles.
