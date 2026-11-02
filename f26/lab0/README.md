@@ -1,7 +1,7 @@
 # Lab 0: Vector Addition
 
 First, [install the bundled course version of TAPA](../tapa/README.md). The
-Makefile selects Xilinx Vivado/Vitis 2024.2 from the NRP Coder workspace.
+Makefile selects Xilinx Vivado/Vitis 2024.2 from your workspace.
 
 The kernel is a four-task dataflow graph connected by `float` streams:
 

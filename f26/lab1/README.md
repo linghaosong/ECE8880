@@ -1,11 +1,13 @@
 # Lab 1: Dot Product
 
 First, [install the bundled course version of TAPA](../tapa/README.md). The
-Makefile selects Xilinx Vivado/Vitis 2024.2 from the NRP Coder workspace.
+Makefile selects Xilinx Vivado/Vitis 2024.2 from your workspace.
 
 The kernel computes the dot product of one `float` vector (length 8192) with
-itself and outputs the sum. The vector is read as `hls::vector<float, 16>`,
-16 floats per access. Four tasks are connected by streams:
+itself and outputs the sum. The host stores and processes individual floats;
+the kernel invocation reinterprets that same buffer as `float_v16`
+(`hls::vector<float, 16>`), so the kernel reads 16 floats per access.
+Four tasks are connected by streams:
 
 ```text
 input_v mmap --> ReadFromMmap --> DotProduct --> WriteToMmap --> output_sum mmap

@@ -1,7 +1,7 @@
 # Lab 3 Part 1: Convolutional Neural Network (CNN) Dataflow
 
 First, [install the bundled course version of TAPA](../tapa/README.md). The
-Makefile selects Xilinx Vivado/Vitis 2024.2 from the NRP Coder workspace.
+Makefile selects Xilinx Vivado/Vitis 2024.2 from your workspace.
 
 This lab is about a one-layer convolutional neural network. The layer applies
 a `kKernel` x `kKernel` convolution with bias for every input/output channel

@@ -1,7 +1,7 @@
 # Lab 2-1: K-Nearest Neighbors (KNN)
 
 First, [install the bundled course version of TAPA](../tapa/README.md). The
-Makefile selects Xilinx Vivado/Vitis 2024.2 from the NRP Coder workspace.
+Makefile selects Xilinx Vivado/Vitis 2024.2 from your workspace.
 
 In this lab, complete the starter kernel to classify CIFAR-10 images using
 1-nearest neighbor (`K = 1`). For each test image, the completed kernel must
