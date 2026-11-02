@@ -2,7 +2,7 @@
 
 Instructor: Linghao Song
 
-## TAPA installation on NRP Coder
+## TAPA installation
 
 Install the bundled TAPA `0.1.20250815` package by following the
 [TAPA installation instructions](tapa/README.md).

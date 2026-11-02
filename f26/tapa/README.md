@@ -4,7 +4,7 @@ This Linux x86-64 package was built from
 [UCLA-VAST/tapa commit `9a572fc`](https://github.com/UCLA-VAST/tapa/tree/9a572fc40c74b533aaf29a728a1697cc2248de28)
 for Xilinx Vivado/Vitis 2024.2.
 
-In an NRP Coder terminal, run:
+In a workspace terminal, run:
 
 ```bash
 cd f26/tapa
