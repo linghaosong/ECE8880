@@ -98,7 +98,7 @@ still builds the design.
 
 Plan for the run time and disk space:
 
-- The reference designs took about 2 hours each on an 8-core workspace.
+- The reference designs took about 8 - 20 hours each on an 8-core workspace.
   Larger designs take longer.
 - One run needs about 2 GB of disk (`_x/` alone is about 1.5 GB). Check free
   space with `df -h ~`; `make cleanall` removes everything the build produced.
@@ -135,6 +135,21 @@ keep these parts:
 | `_x/reports/link/imp/impl_1_hw_bb_locked_timing_summary_postroute_physopted.rpt` | Final timing: WNS >= 0 means the clock target was met |
 | `_x/reports/link/imp/impl_1_full_util_routed.rpt` | Routed utilization of the whole device, including the platform shell |
 | `_x/link/vivado/vpl/prj/prj.runs/impl_1/level0_wrapper_postroute_physopt.dcp` | Final design checkpoint, after post-route physical optimization |
+
+## If routing fails
+
+Placement and routing can fail. If Vivado cannot route the design,
+`impl.log` ends with errors such as
+`ERROR: [VPL 35-2] Design is not legally routed`, and neither the `.xclbin`
+nor the final checkpoint is built. Run `make util` and `make layout` only
+after `make impl` succeeds.
+
+The U55C consists of three dies (SLRs). Routing often fails when one task
+needs more of a resource than one SLR provides, so its logic is spread across
+SLRs and the wires between them run out. Each SLR has 1,344 BRAM_18K, 3,008
+DSPs, 434,560 LUTs, and 320 URAMs (the `Available SLR` row of an HLS report).
+Apply the timing related optimziations and pass software and hardware 
+emulation, then run `make impl` again.
 
 ## Compare routed utilization with HLS
 
