@@ -52,7 +52,7 @@ Run every command below from `lab4/knn` or `lab4/cnn`, in this order:
 | Step | Command | Time |
 | --- | --- | --- |
 | Check correctness | `make swsim` | Minutes |
-| HLS and implementation | `nohup make impl > impl.log 2>&1 &` | About 2 hours or more |
+| HLS and implementation | `nohup make impl > impl.log 2>&1 &` | 8 - 16 hours or more |
 | Routed kernel utilization | `make util` | A few minutes |
 | View the layout (on the desktop) | `make layout` | A few minutes |
 
